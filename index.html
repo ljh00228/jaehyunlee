@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jaehyun Lee — Materials Science & Electrocatalysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fafaf8;
+    --surface: #f4f3f0;
+    --border: #e2e0db;
+    --text: #1a1916;
+    --text-secondary: #5a5750;
+    --text-muted: #8a8780;
+    --accent: #3a6b5e;
+    --accent-light: #e8f0ee;
+    --serif: 'EB Garamond', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+    --nav-h: 58px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(250, 250, 248, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    padding: 0 clamp(1.5rem, 5vw, 4rem);
+    justify-content: space-between;
+  }
+
+  .nav-name {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: 0.01em;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--text);
+    transition: all 0.3s;
+  }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: var(--nav-h);
+    left: 0; right: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem clamp(1.5rem, 5vw, 4rem);
+    z-index: 99;
+  }
+
+  .mobile-menu.open { display: block; }
+
+  .mobile-menu a {
+    display: block;
+    padding: 0.6rem 0;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mobile-menu a:last-child { border-bottom: none; }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 clamp(1.5rem, 5vw, 3rem);
+  }
+
+  section {
+    padding: clamp(3.5rem, 8vw, 6rem) 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  section:last-of-type { border-bottom: none; }
+
+  .section-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 2rem;
+    font-family: var(--sans);
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 3vw, 2rem);
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+  }
+
+  h3 {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+
+  p { color: var(--text-secondary); margin-bottom: 1rem; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── HERO ── */
+  #hero {
+    padding: clamp(4rem, 10vw, 7rem) 0 clamp(3rem, 7vw, 5rem);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-eyebrow {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1.2rem;
+    font-family: var(--sans);
+  }
+
+  .hero-name {
+    font-family: var(--serif);
+    font-size: clamp(2.4rem, 6vw, 3.8rem);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+
+  .hero-tagline {
+    font-family: var(--serif);
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-style: italic;
+    color: var(--text-secondary);
+    max-width: 520px;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .tag {
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-secondary);
+    background: var(--surface);
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-block;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 2px;
+    transition: all 0.2s;
+    font-weight: 400;
+    cursor: pointer;
+    font-family: var(--sans);
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border: 1px solid var(--accent);
+  }
+
+  .btn-primary:hover { background: #2e5549; border-color: #2e5549; }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+  }
+
+  .btn-outline:hover { border-color: var(--text-secondary); color: var(--text); }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .about-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding-top: 0.2rem;
+  }
+
+  .meta-item {
+    padding: 1rem 1.2rem;
+    background: var(--surface);
+    border-left: 2px solid var(--accent);
+  }
+
+  .meta-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+    font-family: var(--sans);
+  }
+
+  .meta-value {
+    font-size: 0.9rem;
+    color: var(--text);
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  /* ── RESEARCH INTERESTS ── */
+  .interests-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .interest-item {
+    background: var(--bg);
+    padding: 1.4rem 1.5rem;
+  }
+
+  .interest-num {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    color: var(--accent);
+    opacity: 0.5;
+    display: block;
+    margin-bottom: 0.4rem;
+    font-style: italic;
+  }
+
+  .interest-text {
+    font-size: 0.88rem;
+    color: var(--text);
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  /* ── PROJECTS ── */
+  .projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border);
+  }
+
+  .project-card {
+    padding: 1.8rem 2rem;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+
+  .project-card:last-child { border-bottom: none; }
+  .project-card:hover { background: var(--surface); }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .project-number {
+    font-family: var(--serif);
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--text-muted);
+    white-space: nowrap;
+    padding-top: 0.1rem;
+  }
+
+  .project-body ul {
+    list-style: none;
+    margin-top: 0.6rem;
+  }
+
+  .project-body ul li {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    padding: 0.2rem 0;
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .project-body ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+  }
+
+  .project-badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    background: var(--accent-light);
+    color: var(--accent);
+    border-radius: 2px;
+    margin-top: 0.8rem;
+    font-weight: 500;
+  }
+
+  /* ── PUBLICATIONS ── */
+  .pub-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .pub-item {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .pub-item:first-child { padding-top: 0; }
+  .pub-item:last-child { border-bottom: none; }
+
+  .pub-year {
+    font-family: var(--serif);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-style: italic;
+    padding-top: 0.15rem;
+    min-width: 2.5rem;
+  }
+
+  .pub-content {}
+
+  .pub-title {
+    font-size: 0.95rem;
+    color: var(--text);
+    font-weight: 400;
+    line-height: 1.5;
+    margin-bottom: 0.25rem;
+    font-family: var(--serif);
+  }
+
+  .pub-authors {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.2rem;
+  }
+
+  .pub-authors strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .pub-journal {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .pub-journal em {
+    font-style: normal;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-group {}
+
+  .skill-group-title {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--sans);
+  }
+
+  .skill-group ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .skill-group ul li {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+  }
+
+  /* ── CV ── */
+  .cv-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 2rem 2.5rem;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    flex-wrap: wrap;
+  }
+
+  .cv-text p {
+    font-size: 0.875rem;
+    margin-top: 0.3rem;
+    color: var(--text-muted);
+  }
+
+  /* ── CONTACT ── */
+  .contact-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 1.5rem;
+  }
+
+  .contact-link {
+    display: flex;
+    flex-direction: column;
+    padding: 1.4rem 1.5rem;
+    background: var(--bg);
+    text-decoration: none;
+    transition: background 0.2s;
+    gap: 0.3rem;
+  }
+
+  .contact-link:hover { background: var(--accent-light); }
+
+  .contact-link-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-family: var(--sans);
+  }
+
+  .contact-link-value {
+    font-size: 0.9rem;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2rem 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-name {
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  .footer-note {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    letter-spacing: 0.03em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 680px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .project-header {
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .pub-item {
+      grid-template-columns: 1fr;
+      gap: 0.4rem;
+    }
+
+    .cv-block {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 1.5rem;
+    }
+
+    .footer-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-name">Jaehyun Lee</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#research" onclick="closeMobile()">Research</a>
+  <a href="#projects" onclick="closeMobile()">Projects</a>
+  <a href="#publications" onclick="closeMobile()">Publications</a>
+  <a href="#skills" onclick="closeMobile()">Skills</a>
+  <a href="#cv" onclick="closeMobile()">CV</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <p class="hero-eyebrow">M.S. Candidate · Materials Science &amp; Engineering · Seoul, South Korea</p>
+    <h1 class="hero-name">Jaehyun Lee</h1>
+    <p class="hero-tagline">Electrocatalysis, 2D materials, and PEM water electrolysis — bridging surface science and hydrogen energy.</p>
+    <div class="hero-tags">
+      <span class="tag">Electrocatalysis</span>
+      <span class="tag">2D Materials</span>
+      <span class="tag">PEM Water Electrolysis</span>
+      <span class="tag">PtSe₂</span>
+      <span class="tag">XPS</span>
+      <span class="tag">Raman Spectroscopy</span>
+      <span class="tag">Defect Engineering</span>
+      <span class="tag">HER</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-primary">Get in Touch</a>
+      <a href="#publications" class="btn btn-outline">View Publications</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <p class="section-label">About</p>
+    <div class="about-grid">
+      <div class="about-text">
+        <h2>Research Background</h2>
+        <p>I am a master's student working on advanced catalytic materials for hydrogen generation and PEM water electrolysis. My research combines materials synthesis, plasma-based surface engineering, spectroscopy, and electrochemical characterization to understand structure–property relationships in low-dimensional materials.</p>
+        <p>I am currently seeking PhD positions at the intersection of renewable energy, advanced electrochemistry, and materials science, where I can contribute to the development of next-generation hydrogen production technologies.</p>
+      </div>
+      <div class="about-meta">
+        <div class="meta-item">
+          <div class="meta-label">Position</div>
+          <div class="meta-value">M.S. Student, Materials Science &amp; Engineering</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Location</div>
+          <div class="meta-value">Seoul, South Korea</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Research Focus</div>
+          <div class="meta-value">Electrocatalysis · 2D Materials · PEM Electrolysis</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Seeking</div>
+          <div class="meta-value">PhD positions in renewable energy / electrochemistry / advanced materials</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH INTERESTS -->
+<section id="research">
+  <div class="container">
+    <p class="section-label">Research Interests</p>
+    <h2>Areas of Focus</h2>
+    <div class="interests-grid">
+      <div class="interest-item">
+        <span class="interest-num">01</span>
+        <span class="interest-text">Electrocatalysis for hydrogen evolution</span>
+      </div>
+      <div class="interest-item">
+        <span class="interest-num">02</span>
+        <span class="interest-text">2D materials and defect engineering</span>
+      </div>
+      <div class="interest-item">
+        <span class="interest-num">03</span>
+        <span class="interest-text">PEM water electrolysis systems</span>
+      </div>
+      <div class="interest-item">
+        <span class="interest-num">04</span>
+        <span class="interest-text">Surface &amp; interface analysis</span>
+      </div>
+      <div class="interest-item">
+        <span class="interest-num">05</span>
+        <span class="interest-text">Spectroscopy-driven materials characterization</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <p class="section-label">Featured Projects</p>
+    <h2>Selected Research Work</h2>
+    <div class="projects-list">
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3>Strain-Engineered PtSe₂ Electrocatalyst for Hydrogen Evolution</h3>
+          <span class="project-number">01</span>
+        </div>
+        <div class="project-body">
+          <ul>
+            <li>Investigated low-dimensional PtSe₂ as a high-performance HER catalyst under controlled strain conditions</li>
+            <li>Combined experimental characterization (XPS, Raman, AFM, electrochemistry) with theoretical interpretation</li>
+            <li>Demonstrated enhanced catalytic activity through strain-mediated electronic structure modulation</li>
+          </ul>
+          <span class="project-badge">ACS Nano · 2025</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3>O₂ Plasma Activation of PtSe₂ Basal Planes</h3>
+          <span class="project-number">02</span>
+        </div>
+        <div class="project-body">
+          <ul>
+            <li>Investigated surface modification via O₂ plasma treatment for targeted defect engineering and catalytic activation</li>
+            <li>Characterized structural and chemical changes using XPS, Raman spectroscopy, and AFM</li>
+            <li>Correlated surface chemistry with electrochemical performance metrics (CV, Tafel, EIS)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3>MEA-Oriented Catalyst Layer Integration for PEM Water Electrolysis</h3>
+          <span class="project-number">03</span>
+        </div>
+        <div class="project-body">
+          <ul>
+            <li>Focused on catalyst transfer protocols, interface design, and charge transport optimization in membrane electrode assemblies</li>
+            <li>Addressed practical integration challenges for scaling 2D material catalysts toward device-level performance</li>
+            <li>Evaluated MEA-level electrochemical stability and efficiency under realistic operating conditions</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="container">
+    <p class="section-label">Publications</p>
+    <h2>Selected Works</h2>
+    <div class="pub-list">
+
+      <div class="pub-item">
+        <span class="pub-year">2025</span>
+        <div class="pub-content">
+          <p class="pub-title">Strain-Engineered Platinum Diselenide as a High-Performance Electrocatalyst for the Hydrogen Evolution Reaction</p>
+          <p class="pub-authors"><strong>J. Lee</strong>*, [Co-first author], et al.</p>
+          <p class="pub-journal"><em>ACS Nano</em>, 2025. DOI: [forthcoming]</p>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <span class="pub-year">2025</span>
+        <div class="pub-content">
+          <p class="pub-title">Plasma-Induced Defect Engineering in 2D Transition Metal Dichalcogenides for Enhanced Electrocatalytic Activity</p>
+          <p class="pub-authors"><strong>J. Lee</strong>, [co-authors], et al.</p>
+          <p class="pub-journal"><em>Journal of Materials Chemistry A</em>, 2025. [In preparation]</p>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <span class="pub-year">2024</span>
+        <div class="pub-content">
+          <p class="pub-title">Membrane Electrode Assembly Optimization for PEM Water Electrolysis Using 2D Material-Based Catalyst Layers</p>
+          <p class="pub-authors">[co-authors], <strong>J. Lee</strong>, et al.</p>
+          <p class="pub-journal"><em>ACS Applied Materials &amp; Interfaces</em>, 2024. [In preparation]</p>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <span class="pub-year">2024</span>
+        <div class="pub-content">
+          <p class="pub-title">XPS and Raman Spectroscopy Investigation of Surface Oxidation States in PtSe₂ Thin Films</p>
+          <p class="pub-authors">[co-authors], <strong>J. Lee</strong>, et al.</p>
+          <p class="pub-journal"><em>Surface Science</em>, 2024. [Placeholder]</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <p class="section-label">Technical Skills</p>
+    <h2>Methods &amp; Instrumentation</h2>
+    <div class="skills-grid">
+
+      <div class="skill-group">
+        <div class="skill-group-title">Surface Characterization</div>
+        <ul>
+          <li>XPS peak deconvolution &amp; interpretation</li>
+          <li>Raman spectroscopy</li>
+          <li>AFM (topographic &amp; phase imaging)</li>
+          <li>CasaXPS data analysis</li>
+        </ul>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Electrochemical Methods</div>
+        <ul>
+          <li>Cyclic voltammetry (CV)</li>
+          <li>Tafel slope analysis</li>
+          <li>Electrochemical impedance spectroscopy (EIS)</li>
+          <li>Linear sweep voltammetry</li>
+        </ul>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Device &amp; Fabrication</div>
+        <ul>
+          <li>MEA fabrication</li>
+          <li>O₂ plasma surface treatment</li>
+          <li>Thin film preparation</li>
+          <li>Catalyst layer integration</li>
+        </ul>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Data &amp; Analysis</div>
+        <ul>
+          <li>Origin (graphing &amp; curve fitting)</li>
+          <li>Electrochemical data analysis</li>
+          <li>Materials characterization workflows</li>
+          <li>Scientific writing &amp; reporting</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CV -->
+<section id="cv">
+  <div class="container">
+    <p class="section-label">Curriculum Vitae</p>
+    <div class="cv-block">
+      <div class="cv-text">
+        <h3>Download Full CV</h3>
+        <p>Updated June 2025 · PDF, 2 pages</p>
+      </div>
+      <a href="#" class="btn btn-primary" onclick="alert('CV download link not yet configured.'); return false;">Download CV (PDF)</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <p class="section-label">Contact &amp; Links</p>
+    <h2>Get in Touch</h2>
+    <p>I am actively seeking PhD positions in renewable energy, electrochemistry, and advanced materials. Please feel free to reach out to discuss potential opportunities or collaborations.</p>
+    <div class="contact-links">
+      <a href="mailto:ljh00228@gmail.com" class="contact-link">
+        <span class="contact-link-label">Email</span>
+        <span class="contact-link-value">ljh00228@gmail.com</span>
+      </a>
+      <a href="https://scholar.google.com" target="_blank" rel="noopener" class="contact-link">
+        <span class="contact-link-label">Google Scholar</span>
+        <span class="contact-link-value">View Profile →</span>
+      </a>
+      <a href="https://orcid.org" target="_blank" rel="noopener" class="contact-link">
+        <span class="contact-link-label">ORCID</span>
+        <span class="contact-link-value">0000-0000-0000-0000</span>
+      </a>
+      <a href="https://github.com" target="_blank" rel="noopener" class="contact-link">
+        <span class="contact-link-label">GitHub</span>
+        <span class="contact-link-value">@jaehyunlee</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <span class="footer-name">Jaehyun Lee</span>
+      <span class="footer-note">M.S. Candidate · Materials Science &amp; Engineering · Seoul, South Korea · 2025</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+
+  function closeMobile() {
+    mobileMenu.classList.remove('open');
+  }
+
+  // Close mobile menu on outside click
+  document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+      mobileMenu.classList.remove('open');
+    }
+  });
+</script>
+
+</body>
+</html>
